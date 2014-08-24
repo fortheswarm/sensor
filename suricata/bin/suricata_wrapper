@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ ! -z "$SINK_VOLUME" ]
+then SINK=$SINK_VOLUME/suricata/$HOSTNAME
+else SINK=/sink/suricata/$HOSTNAME
+fi
+
+echo "sink volume: $SINK"
+mkdir -p $SINK
+echo "writing suricata.yml"
+sed -i "s#/var/log/suricata/#$SINK/#" /etc/suricata/suricata.yaml
+echo "running oinkmaster..."
+oinkmaster -C /etc/oinkmaster.conf -o /etc/suricata/rules     
+echo "running suricata..."
+suricata $*
