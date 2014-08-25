@@ -7,13 +7,13 @@ fi
 echo "sink volume: $SINK"
 mkdir -p $SINK
 cd $SINK
-if [ ! -z "$SINK_PORT_80_TCP" ]
-then
-  echo "elasticsearch URL: $SINK_PORT_80_TCP_ADDR:$SINK_PORT_80_TCP_PORT"
-  echo "@load tuning/logs-to-elasticsearch" >> /nsm/bro/share/bro/site/local.bro
-  echo "redef LogElasticSearch::server_host = \"$SINK_PORT_80_TCP_ADDR\";" \
-    >> /nsm/bro/share/bro/site/local.bro
-  echo "redef LogElasticSearch::server_port = $SINK_PORT_80_TCP_PORT;" \
-    >> /nsm/bro/share/bro/site/local.bro
- fi
+ # if [ ! -z "$SINK_PORT_80_TCP" ] && [ ! -z "$BRO_ELASTICSEARCH_ENABLED" ]
+ # then
+ #  echo "elasticsearch URL: $SINK_PORT_80_TCP_ADDR:$SINK_PORT_80_TCP_PORT"
+ #  echo "@load tuning/logs-to-elasticsearch" >> /nsm/bro/share/bro/site/local.bro
+ #  echo "redef LogElasticSearch::server_host = \"$SINK_PORT_80_TCP_ADDR\";" \
+ #    >> /nsm/bro/share/bro/site/local.bro
+ #  echo "redef LogElasticSearch::server_port = $SINK_PORT_80_TCP_PORT;" \
+ #    >> /nsm/bro/share/bro/site/local.bro
+ # fi
 bro $* 
