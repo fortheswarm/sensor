@@ -11,4 +11,4 @@ sed -i "s#/var/log/suricata/#$SINK/#" /etc/suricata/suricata.yaml
 echo "running oinkmaster..."
 oinkmaster -C /etc/oinkmaster.conf -o /etc/suricata/rules     
 echo "running suricata..."
-suricata $*
+exec /usr/bin/suricata $@

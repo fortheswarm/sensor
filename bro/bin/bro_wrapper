@@ -16,4 +16,5 @@ cd $SINK
  #  echo "redef LogElasticSearch::server_port = $SINK_PORT_80_TCP_PORT;" \
  #    >> /nsm/bro/share/bro/site/local.bro
  # fi
-bro $* 
+ 
+exec /nsm/bro/bin/bro $@
