@@ -10,7 +10,7 @@
 FROM debian:jessie
 MAINTAINER strcrzy, https://github.com/strcrzy
 
-RUN apt-get -qq update && apt-get -qq install libpcre3 libpcre3-dbg libpcre3-dev \
+RUN apt-get -qq update && apt-get -qq install libpcre3 libpcre3-dbg libpcre3-dev\
   build-essential autoconf automake libtool libpcap-dev libnet1-dev  pkg-config \
   libjansson-dev libyaml-0-2 libyaml-dev zlib1g zlib1g-dev libmagic-dev  python \
   libcap-ng-dev libgeoip-dev  
@@ -24,16 +24,16 @@ RUN tar -zxvf LuaJIT-2.0.3.tar.gz && cd LuaJIT-2.0.3 && make install
 ADD http://www.openinfosecfoundation.org/download/suricata-2.0.3.tar.gz /tmp/
 RUN tar -zxvf suricata-2.0.3.tar.gz && cd suricata-2.0.3 && \
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-  --enable-geoip --enable-luajit && make && make install && make install-full
-RUN apt-get install -y  oinkmaster
-
+  --enable-geoip --enable-luajit && make && make install && make install-full &&\
+  apt-get install -y  oinkmaster
 ADD /etc/oinkmaster.conf /etc/
 ADD /etc/suricata/suricata.yaml /etc/suricata/
 ADD /bin/suricata_wrapper /usr/bin/
-RUN chmod +x /usr/bin/suricata_wrapper
 
-# cleanup
-RUN ldconfig && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN \
+  chmod +x /usr/bin/suricata_wrapper && \
+  ldconfig && apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV PATH /nsm/bro/bin:$PATH
 
